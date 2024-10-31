@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
+import '../common/services/auth_service.dart';
+import '../data/models/user_role.dart';
 
 class RegistrationPage extends StatefulWidget {
   static const routeName = 'registration_page';
@@ -11,32 +12,48 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  final AuthService _authService = AuthService();
-  final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _roleController = TextEditingController();
+  final TextEditingController _namaPanjangController = TextEditingController();
+  UserRole? _selectedRole;
+  final AuthService _authService = AuthService();
+  bool _isLoading = false;
 
-  void _register() {
-    if (_formKey.currentState!.validate()) {
-      final username = _usernameController.text;
-      final email = _emailController.text;
-      final password = _passwordController.text;
-      final role = _roleController.text;
+  final List<UserRole> _roles = UserRole.values;
 
-      final isRegistered = _authService.registerUser(username, email, password, role);
-
-      if (isRegistered) {
+  void _register() async {
+    try {
+      if (_usernameController.text.isEmpty || _emailController.text.isEmpty ||
+          _passwordController.text.isEmpty || _namaPanjangController.text.isEmpty ||
+          _selectedRole == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Pendaftaran berhasil!')),
+          const SnackBar(content: Text('Please fill in all fields')),
         );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Username sudah terdaftar.')),
-        );
+        return;
       }
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      final result = await _authService.registerUser(
+        _usernameController.text,
+        _emailController.text,
+        _passwordController.text,
+        _namaPanjangController.text,
+        _selectedRole!,
+      );
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(result ? 'Registration successful' : 'Registration failed')),
+      );
+    } catch (error) {
+      print('Error: $error');
     }
   }
 
@@ -44,65 +61,54 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pendaftaran'),
+        title: const Text('Registration'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan username.';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan email.';
-                  }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Silakan masukkan email yang valid.';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan password.';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _roleController,
-                decoration: InputDecoration(labelText: 'Role'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Silakan masukkan role.';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _register,
-                child: Text('Daftar'),
-              ),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _namaPanjangController,
+              decoration: const InputDecoration(labelText: 'Nama Panjang'),
+            ),
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(labelText: 'Username'),
+            ),
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            DropdownButtonFormField<UserRole>(
+              value: _selectedRole,
+              decoration: const InputDecoration(labelText: 'Role'),
+              items: _roles.map((role) {
+                return DropdownMenuItem<UserRole>(
+                  value: role,
+                  child: Text(role.name),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  _selectedRole = value;
+                });
+              },
+            ),
+            const SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _isLoading ? null : _register,
+              child: _isLoading
+                  ? const CircularProgressIndicator()
+                  : const Text('Register'),
+            ),
+          ],
         ),
       ),
     );
