@@ -1,4 +1,5 @@
-import 'package:aplikasi_baca/ui/home_page.dart';
+import 'package:aplikasi_baca/common/navigation.dart';
+import 'package:aplikasi_baca/ui/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,9 +27,11 @@ class MyApp extends StatelessWidget {
     return SafeArea(
       child: MaterialApp(
         title: 'Aplikasi Wisata Kota Magetan',
+        scaffoldMessengerKey: scaffoldMessengerKey,
+        navigatorKey: navigatorKey,
         theme: materialTheme.light(),
         darkTheme: materialTheme.dark(),
-        initialRoute: HomePage.routeName,
+        initialRoute: LoginPage.routeName,
         onGenerateRoute: AppRoutes.generateRoute,
       ),
     );

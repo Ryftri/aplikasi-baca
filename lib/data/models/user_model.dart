@@ -1,16 +1,26 @@
+import 'package:aplikasi_baca/data/models/user_role.dart';
+
 class UserModel {
-  final String username;
-  final String email;
-  final String password; // Pastikan untuk mengamankan data ini
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  String? id;
+  String username;
+  String email;
+  String password;
+  String salt; // Tambahkan properti salt
+  DateTime createdAt;
+  DateTime updatedAt;
+  UserRole role;
+  String namaPanjang;
 
   UserModel({
+    this.id,
     required this.username,
     required this.email,
     required this.password,
+    required this.salt, // Tambahkan parameter ini
     required this.createdAt,
     required this.updatedAt,
+    required this.role,
+    required this.namaPanjang,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,8 +28,11 @@ class UserModel {
       'username': username,
       'email': email,
       'password': password,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'salt': salt, // Sertakan salt dalam map
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+      'role': role.name,
+      'nama_panjang': namaPanjang,
     };
   }
 }
