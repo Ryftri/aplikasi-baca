@@ -3,12 +3,12 @@
     "project_number": "1013223941565",
     "firebase_url": "https://aplikasi-bacaan-32e65-default-rtdb.firebaseio.com",
     "project_id": "aplikasi-bacaan-32e65",
-    "storage_bucket": "aplikasi-bacaan-32e65.appspot.com"
+    "storage_bucket": "aplikasi-bacaan-32e65.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1013223941565:android:4b7343a1bfa681e5765ed4",
+        "mobilesdk_app_id": "1:1013223941565:android:000f9b24002fde92765ed4",
         "android_client_info": {
           "package_name": "com.example.aplikasi_baca"
         }
