@@ -5,7 +5,7 @@ class UserModel {
   String username;
   String email;
   String password;
-  String salt; // Tambahkan properti salt
+  String salt;
   DateTime createdAt;
   DateTime updatedAt;
   UserRole role;
