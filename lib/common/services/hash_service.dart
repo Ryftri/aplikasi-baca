@@ -11,7 +11,6 @@ class HashService {
   }
 
   static String hashPassword(String password, String salt, {int iterations = 10000}) {
-    // Validasi salt
     if (salt.isEmpty || (salt.length % 4) != 0) {
       throw FormatException("Invalid salt length", salt);
     }
@@ -19,7 +18,6 @@ class HashService {
     final key = utf8.encode(password);
     final saltBytes = base64.decode(salt);
 
-    // Menggunakan HMAC dengan SHA-256
     var hmac = Hmac(sha256, key);
     List<int> derivedKey = Uint8List.fromList(saltBytes);
 
@@ -31,7 +29,6 @@ class HashService {
   }
 
   static bool verifyPassword(String inputPassword, String storedHash, String salt, {int iterations = 10000}) {
-    // Validasi salt
     if (salt.isEmpty || (salt.length % 4) != 0) {
       throw FormatException("Invalid salt length", salt);
     }

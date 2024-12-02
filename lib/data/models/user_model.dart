@@ -16,7 +16,7 @@ class UserModel {
     required this.username,
     required this.email,
     required this.password,
-    required this.salt, // Tambahkan parameter ini
+    required this.salt,
     required this.createdAt,
     required this.updatedAt,
     required this.role,
@@ -28,7 +28,7 @@ class UserModel {
       'username': username,
       'email': email,
       'password': password,
-      'salt': salt, // Sertakan salt dalam map
+      'salt': salt,
       'created_at': createdAt,
       'updated_at': updatedAt,
       'role': role.name,

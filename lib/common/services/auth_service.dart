@@ -18,7 +18,7 @@ class AuthService {
         username: username,
         email: email,
         password: hashedPassword,
-        salt: salt, // Tambahkan salt ke model
+        salt: salt,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         role: role,
