@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDyZKsx8NmaLEPtpkAykWAoY2oyad6rUMA',
-    appId: '1:1013223941565:android:000f9b24002fde92765ed4',
+    appId: '1:1013223941565:android:036bbec5020a5ff4765ed4',
     messagingSenderId: '1013223941565',
     projectId: 'aplikasi-bacaan-32e65',
     databaseURL: 'https://aplikasi-bacaan-32e65-default-rtdb.firebaseio.com',
