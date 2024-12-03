@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigation.intentWithNoData(RegistrationPage.routeName);
               },
-              child: const Text('Don\'t have an account? Register here.'),
+              child: const Text('Daftar disini.'),
             ),
           ],
         ),
