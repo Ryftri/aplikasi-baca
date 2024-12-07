@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class RouteTransitions {
-  static PageRouteBuilder buildPageRoute(Widget page) {
+  static PageRouteBuilder buildPageRoute(Widget page, RouteSettings settings) {
     return PageRouteBuilder(
+      settings: settings,
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionDuration: const Duration(milliseconds: 600),
       reverseTransitionDuration: const Duration(milliseconds: 600),

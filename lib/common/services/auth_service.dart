@@ -57,7 +57,7 @@ class AuthService {
     );
 
     final isValid = HashService.verifyPassword(password, user.password, user.salt);
-    return isValid ? user : null;
+    return isValid ? user : throw Exception('Password Salah.');
   }
 
   Future<UserRole?> getUserRole(String username) async {

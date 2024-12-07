@@ -10,11 +10,11 @@ class AppRoutes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case HomePage.routeName:
-        return RouteTransitions.buildPageRoute(const HomePage());
+        return RouteTransitions.buildPageRoute(const HomePage(), settings);
       case RegistrationPage.routeName:
-        return RouteTransitions.buildPageRoute(const RegistrationPage());
+        return RouteTransitions.buildPageRoute(const RegistrationPage(), settings);
       case LoginPage.routeName:
-        return RouteTransitions.buildPageRoute(const LoginPage());
+        return RouteTransitions.buildPageRoute(const LoginPage(), settings);
       default :
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
